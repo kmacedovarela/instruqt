@@ -3,41 +3,37 @@ id: ytvzoo1unyy4
 type: track
 title: OptaPlanner and Quarkus
 description: |
-  [OptaPlanner](https://optaplanner.org) is an A.I. constraint satisfaction solver that provides a highly scalable platform to find optimal solutions to NP-complete and NP-hard problems.
+  In this scenario, you will learn how to implement an [OptaPlanner](https://www.optaplanner.org) application on [Quarkus](https://www.quarkus.io).
 
-  <center><img src="https://raw.githubusercontent.com/openshift-instruqt/instruqt/master/assets/middleware/middleware-kogito/optaPlannerLogo.png" width="400"><center>
+  ![Logo](https://raw.githubusercontent.com/openshift-instruqt/instruqt/master/assets/middleware/middleware-kogito/logo.png)
+  ![Logo](https://raw.githubusercontent.com/openshift-instruqt/instruqt/master/assets/middleware/middleware-kogito/optaPlannerLogo.png)
 
-  [OptaPlanner](https://optaplanner.org) enables us to write these solutions in plain Java, which makes this technology available to a large group of software developers. Furthermore, the OptaPlanner Quarkus extension lets us write our OptaPlanner application as a cloud-native micro-service.
+  ### Knapsack Problem
 
-  In this track you will start from scratch and learn how to implement an [OptaPlanner](https://www.optaplanner.org) application using [Quarkus](https://www.quarkus.io). Here you can learn core concepts of OptaPlanner and how to use it in your Java application.
+  The knapsack problem is a problem in combinatoral optimization: given a knapsack that can contain a maximum weight and a set of items with a certain
+  weight and value, determine the combination of items to include in the knapsack that maximizes the value of the contents without exceeding the knapsack weight limit.
 
-  ### The Knapsack Problem
+  ![Knapsack Problem](https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Knapsack.svg/500px-Knapsack.svg.png)
 
-  In this track you'll learn while solving an interesting problem: the *Knapsack Problem*.
+  (image source: https://commons.wikimedia.org/wiki/File:Knapsack.svg , license: https://creativecommons.org/licenses/by-sa/2.5/deed.en)
 
-  The knapsack problem is an _NP-complete_ problem, which means it's not solvable in polynomial time. In other words, when the size of the problem grows, the time needed to solve the problem grows exponentially. For even relatively small problems, this means that finding the best solution can take billions of years.
+  In this example, we have ingots of different weights and values that we want to put in our knapsack. OptaPlanner will select the combination of ingots that won't exceed the knapsack's maximum weight but will provide the highest value possible.
 
-  You'll have the task to put in the knapsack some ingots of different weights and values. You will use OptaPlanner to select the optimal combination of ingots, in other words, a group of ingots that won't exceed the knapsack's maximum weight but will also provide the highest value possible.
+  OptaPlanner is an A.I. constraint satisfaction solver that provides a highly scalable platform to find optimal solutions to NP-complete and NP-hard problems. OptaPlanner enables us to write these solutions in plain Java, which makes this technology available to a large group of software developers. Furthermore, the OptaPlanner Quarkus extension lets us write our OptaPlanner application as a cloud-native micro-service.
 
-  <center><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Knapsack.svg/500px-Knapsack.svg.png" width="250" alt="Knapsack Problem"><center>
+  ### Other possibilities
 
-  _image source: https://commons.wikimedia.org/wiki/File:Knapsack.svg, license: https://creativecommons.org/licenses/by-sa/2.5/deed.en_
-
-  ### More about OptaPlanner
-
-  You can see more than twenty use case examples at [optaplanner.org](https://optaplanner.org), plus a rich documentation with all levels of content: from getting started to advanced.
+  Learn more at [optaplanner.org](https://optaplanner.org), [kogito.kie.org](https://kogito.kie.org), and [quarkus.io](https://quarkus.io), or just drive on and get hands-on!
 icon: https://logodix.com/logo/1910931.png
+level: beginner
 tags:
 - openshift
-- optaplanner
-- process-automation
-- optimization
 owner: openshift
 developers:
 - nvinto@redhat.com
 - rjarvine@redhat.com
 - dahmed@redhat.com
-- kmacedovarela@gmail.com
+- kvarela@redhat.com
 private: false
 published: true
 challenges:
@@ -48,97 +44,75 @@ challenges:
   notes:
   - type: text
     contents: |
-      *Welcome!*
+      In this scenario, you will learn how to implement an [OptaPlanner](https://www.optaplanner.org) application on [Quarkus](https://www.quarkus.io).
 
-      This is a track to help you get started with [OptaPlanner](https://www.optaplanner.org) on [Quarkus](https://www.quarkus.io).
+      ![Logo](https://raw.githubusercontent.com/openshift-instruqt/instruqt/master/assets/middleware/middleware-kogito/logo.png)
+      ![Logo](https://raw.githubusercontent.com/openshift-instruqt/instruqt/master/assets/middleware/middleware-kogito/optaPlannerLogo.png)
 
-      *What you will build*
+      ### Knapsack Problem
 
-       In this scenario, we will build an OptaPlanner application on Quarkus that will solve the knapsack problem. The knapsack problem is an _NP-complete_ problem, which means it's not solvable in polynomial time. In other words, when the size of the problem grows, the time needed to solve the problem grows exponentially. For even relatively small problems, this means that finding the best solution can take billions of years.
+      The knapsack problem is a problem in combinatoral optimization: given a knapsack that can contain a maximum weight and a set of items with a certain
+      weight and value, determine the combination of items to include in the knapsack that maximizes the value of the contents without exceeding the knapsack weight limit.
 
-       Click the right arrow to understand what is the Knapsack Problem.
-  - type: text
-    contents: |
-      *Knapsack Problem*
+      ![Knapsack Problem](https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Knapsack.svg/500px-Knapsack.svg.png)
 
-      You'll now solve an interesting problem: the *Knapsack Problem*.
+      (image source: https://commons.wikimedia.org/wiki/File:Knapsack.svg , license: https://creativecommons.org/licenses/by-sa/2.5/deed.en)
 
-      The challenge of this scenario is that:
-      * Given: a knapsack that can contain a maximum weight and a set of items with a **certain weight and value,
-      * Determine: the combination of items to include in the knapsack that maximizes the value of the contents without exceeding the knapsack weight limit.
+      In this example, we have ingots of different weights and values that we want to put in our knapsack. OptaPlanner will select the combination of ingots that won't exceed the knapsack's maximum weight but will provide the highest value possible.
 
-      The knapsack problem is a problem in combinatoral optimization: given a knapsack that can contain a maximum weight and a set of items with a certain weight and value, determine the combination of items to include in the knapsack that maximizes the value of the contents without exceeding the knapsack weight limit.
+      OptaPlanner is an A.I. constraint satisfaction solver that provides a highly scalable platform to find optimal solutions to NP-complete and NP-hard problems. OptaPlanner enables us to write these solutions in plain Java, which makes this technology available to a large group of software developers. Furthermore, the OptaPlanner Quarkus extension lets us write our OptaPlanner application as a cloud-native micro-service.
 
-      Click the right arrow to understand what is OptaPlanner.
-  - type: text
-    contents: |
-      *What is OptaPlanner?*
+      ### Other possibilities
 
-      <center><img src="https://raw.githubusercontent.com/openshift-instruqt/instruqt/master/assets/middleware/middleware-kogito/optaPlannerLogo.png" width="350"><center>
-
-      OptaPlanner is a lightweight, embeddable planning engine. It enables everyday programmers to solve optimization problems efficiently.
-
-      It optimizes plans and schedules with hard constraints and soft constraints. It reduces costs substantially, improves service quality, fulfills employee wishes and lowers carbon emissions.
-
-      OptaPlanner supports
-      * Continuous planning to weekly publish the schedule, 3 weeks before execution
-      * Non-disruptive replanning for changes to an already published schedule
-      * Real-time planning to react on real-time disruptions in the plan within milliseconds
-      * Overconstrained planning when there are too few resources to cover all the work
-      * Pinning so the user is still in control over the schedule
-
-      Under the hood, OptaPlanner combines sophisticated Artificial Intelligence optimization algorithms (such as Tabu Search, Simulated Annealing, Late Acceptance and other metaheuristics) with very efficient score calculation and other state-of-the-art constraint solving techniques for NP-complete or NP-hard problems.
-
-      To know more, visit optaplanner.org or click the right arrow and check a short video!
-  - type: video
-    url: https://www.youtube.com/embed/f4jIWbQpjdE
+      Learn more at [optaplanner.org](https://optaplanner.org), [kogito.kie.org](https://kogito.kie.org), and [quarkus.io](https://quarkus.io), or just drive on and get hands-on!
   assignment: |
-    The first step is to create the OptaPlanner Quarkus application skeleton.
+    In this step, we will create the OptaPlanner Quarkus application skeleton.
 
     # The Project
 
-    We'll start with a basic Maven-based Quarkus application which has been generated from the Quarkus Maven Plugin.
+    We start with a basic Maven-based Quarkus application which has been generated from the Quarkus Maven Plugin.
+
+    # The Application You Will Build
+
+    In this scenario, we will build an OptaPlanner application on Quarkus that will solve the knapsack problem. The knapsack problem is a problem in which we need to put ingots with a certain weight and a certain value into a knapsack in such a way that we maximize the value without exceeding the maximum knapsack weight. The knapsack problem is an _NP-complete_ problem, which means it's not solvable in polynomial time. In other words, when the size of the problem grows, the time needed to solve the problem grows exponentially. For even relatively small problems, this means that finding the best solution can take billions of years.
+
+    OptaPlanner is an A.I. constraint satisfaction solver that enables us to find the optimal solution to these kinds of problems in the limited time at our disposal. In this scenario, we will build an OptaPlanner application that runs on Quarkus to solve this problem.
+
 
     # Creating a basic project
-    The easiest way to create a new Quarkus project is to use the Quarkus maven plugin. On `Terminal 1`, execute the following commands:
-    ```
-    cd /root/projects/optaplanner/
-    mvn io.quarkus:quarkus-maven-plugin:2.5.0.Final:create -DprojectGroupId=com.redhat -DprojectArtifactId=knapsack-optaplanner-quarkus -DclassName="com.redhat.knapsackoptaplanner.solver.KnapsackResource" -Dpath="/knapsack" -Dextensions="org.optaplanner:optaplanner-quarkus,org.optaplanner:optaplanner-quarkus-jackson,quarkus-resteasy-jackson,quarkus-smallrye-openapi"
-    ```
 
-    You've just used the Quarkus Maven plugin to generate a basic Quarkus application that includes the OptaPlanner extension. It is located in the `knapsack-optaplanner-quarkus` subdirectory.
+    The easiest way to create a new Quarkus project is to click the following Maven command:
 
-     On `Terminal 1`, copy and paste the following command to remove the automatically generated unit-test classes:
+    `mvn io.quarkus:quarkus-maven-plugin:1.7.0.Final:create \
+        -DprojectGroupId=com.redhat \
+        -DprojectArtifactId=knapsack-optaplanner-quarkus \
+        -DclassName="com.redhat.knapsackoptaplanner.solver.KnapsackResource" \
+        -Dpath="/knapsack" \
+        -Dextensions="org.optaplanner:optaplanner-quarkus,org.optaplanner:optaplanner-quarkus-jackson,quarkus-resteasy-jackson,quarkus-smallrye-openapi"`
+
+
+    This command uses the Quarkus Maven plugin and generates a basic Quarkus application that includes the OptaPlanner extension in the `knapsack-optaplanner-quarkus` subdirectory.
+
+    Click the following command to remove the automatically generated unit-test classes:
     ```
-    rm -rf /root/projects/optaplanner/knapsack-optaplanner-quarkus/src/test/java/com
+    rm -rf /root/projects/kogito/knapsack-optaplanner-quarkus/src/test/java/com
     ````
 
     # Running the Application
 
-    On `Terminal 1`, execute, change directory to the `knapsack-optaplanner-quarkus` directory:
+    Click the following command to change directory to the `knapsack-optaplanner-quarkus` directory:
+
     ```
-    cd /root/projects/optaplanner/knapsack-optaplanner-quarkus
+    cd /root/projects/kogito/knapsack-optaplanner-quarkus
     ```
 
-    Let's run the application for the first time. The next command starts the OptaPlanner application in Quarkus development mode. This mode enable developers to keep the application running while we implementing application logic. OptaPlanner and Quarkus will hot reload the application (update changes while the application is running) when it is accessed and changes have been detected.
+    Click the next command to run the OptaPlanner application in Quarkus development mode. This enables us to keep the application running while we implement our application logic. OptaPlanner and Quarkus will hot reload the application (update changes while the application is running) when it is accessed and changes have been detected:
 
-    On `Terminal 1`, start your app:
     ```
     mvn clean compile quarkus:dev
     ```
 
-    Maven will download the required libraries and the application should starts in development mode. Notice it returns a WARN message saying it can't find any classes annotated with `@PlanningSolution`. This is expected! We will implement these classes later.
-
-    Next, hit `CTRL-C` or type `q` to stop Quarkus.
-
-    # Adding project packages
-    Next, let's use the `Terminal 1`, to add a couple of folders to our application. These folders will be the packages that will hold the classes we'll create on the next steps.
-
-    On `Terminal 1`, execute:
-    ```
-    mkdir -p /root/projects/optaplanner/knapsack-optaplanner-quarkus/src/main/java/com/redhat/knapsackoptaplanner/domain
-    mkdir -p /root/projects/optaplanner/knapsack-optaplanner-quarkus/src/main/java/com/redhat/knapsackoptaplanner/solver
-    ```
+    The application starts in development mode, but returns an error that it can't find any classes annotated with `@PlanningSolution`. This is expected! We will implement these classes later.
 
     # Congratulations!
 
@@ -149,34 +123,36 @@ challenges:
   - title: Terminal 1
     type: terminal
     hostname: crc
+  - title: Visual Editor
+    type: code
+    hostname: crc
+    path: /root
   difficulty: basic
-  timelimit: 600
+  timelimit: 200
 - slug: 02-implement-domain-model
   id: ruzyyh7uscxp
   type: challenge
   title: Step 2
-  notes:
-  - type: text
-    contents: |
-      ## Learn the concepts:
-
-      ### PlanningEntities
-      Each OptaPlanner application has planning entities (`@PlanningEntity` annotation) and planning variables (`@PlanningVariable` annotation). Planning entities are the entities in our domain that OptaPlanner needs to plan. In the knapsack problem, these are the ingots because these are the entities that are either put into the knapsack or not.
-      ### PlanningVariables
-      Planning variables are properties of a planning entity that specify a planning value that changes during planning. In the knapsack problem, this is the property that tells OptaPlanner whether or not the ingot is _selected_. That is, whether or not it is put in the knapsack. Note that in this example we have a single knapsack. If we have multiple knapsacks, the actual knapsack is the planning variable, because an ingot can be placed in different knapsacks.
   assignment: |
     In the previous step we've created a skeleton OptaPlanner application with Quarkus and started the application in Quarkus development mode. In this step we'll create the domain model of our application.
 
-    ## Implement the Ingot class
+    ## PlanningEntities and PlanningVariables
 
-    In the `Visual Editor`:
-    1. Navigate to the folder `src/main/java/com/redhat/knapsackoptaplanner/domain`
-    2. Add a new file `Ingot.java` (_by clicking on the left icon next to the `domain` folder name_)
-    3. Click the `Ingot.java` class file to open it.
+    Each OptaPlanner application has planning entities (`@PlanningEntity` annotation) and planning variables (`@PlanningVariable` annotation). Planning entities are the entities in our domain that OptaPlanner needs to plan. In the knapsack problem, these are the ingots because these are the entities that are either put into the knapsack or not.
 
-    Now, let's add the following initial code your class. Copy and paste the source code into the class `Ingot.java`:
+    Planning variables are properties of a planning entity that specify a planning value that changes during planning. In the knapsack problem, this is the property that tells OptaPlanner whether or not the ingot is _selected_. That is, whether or not it is put in the knapsack. Note that in this example we have a single knapsack. If we have multiple knapsacks, the actual knapsack is the planning variable, because an ingot can be placed in different knapsacks.
 
-    ```
+    ## Ingot
+
+    To implement the `Ingot` class, first we need to create a new package in our project:
+
+    `mkdir -p /root/projects/kogito/knapsack-optaplanner-quarkus/src/main/java/com/redhat/knapsackoptaplanner/domain`
+
+    Click on the following line to open a new `Ingot.java` file in this package: `knapsack-optaplanner-quarkus/src/main/java/com/redhat/knapsackoptaplanner/domain/Ingot.java`
+
+    Click _Copy to Editor_ to copy the source code into the new `Ingot.java`file.
+
+    <pre class="file" data-filename="./knapsack-optaplanner-quarkus/src/main/java/com/redhat/knapsackoptaplanner/domain/Ingot.java" data-target="replace">
     package com.redhat.knapsackoptaplanner.domain;
 
     import org.optaplanner.core.api.domain.entity.PlanningEntity;
@@ -184,10 +160,9 @@ challenges:
 
     /**
      * Ingot
-        */
-
-      //Add PlanningEntity annotation
-      public class Ingot {
+     */
+    //Add PlanningEntity annotation
+    public class Ingot {
 
         private int weight;
 
@@ -224,41 +199,23 @@ challenges:
         }
 
     }
-    ```
+    </pre>
 
-    ### Configuring the Planning Entity and Planning PlanningVariables
+    ### Planning Entity
 
-    #### Planning Entity
+    We first need to tell OptaPlanner that this class is our `PlanningEntity` class. To do this, click _Copy to Editor_ to set the `@PlanningEntity` annotation on the class.
 
-    First, let's tell OptaPlanner that this Ingot class is our `PlanningEntity` class. To do this, on line 11, annotate the class by adding:  
-    ```@PlanningEntity```
-
-    It should look like this:
-
-    ```
-    //Add PlanningEntity annotation
+    <pre class="file" data-filename="./knapsack-optaplanner-quarkus/src/main/java/com/redhat/knapsackoptaplanner/domain/Ingot.java" data-target="insert" data-marker="//Add PlanningEntity annotation">
     @PlanningEntity
-    public class Ingot {
-    ```
+    </pre>
 
     #### Planning Variable
 
-    Next, we need to configure our planning variable. 
+    Next, we need to configure our planning variable. In this example, the planning variable (the property that changes during planning) is the `selected` attribute of the planning entity class. Mark this property with the `@PlanningVariable` annotation and specify the _valuerange provider_. This is the entity in our application that provides the range of possible values of our planning variable.
 
-    In this example, the planning variable (the property that changes during planning) is the `selected` attribute of the planning entity class. Annotate this property with the `@PlanningVariable` annotation and specify the _valuerange provider_. This is the entity in our application that provides the range of possible values of our planning variable.
-
-    On line 19, annotate the `selected` attribute by adding: 
-
-    ```
-    @PlanningVariable
-    ```
-
-    It should look like this: 
-    ```
-    //Add Planning Variable annotation
-    @PlanningVariable(valueRangeProviderRefs = "selected")
-    private Boolean selected;
-    ```
+    <pre class="file" data-filename="./knapsack-optaplanner-quarkus/src/main/java/com/redhat/knapsackoptaplanner/domain/Ingot.java" data-target="insert" data-marker="  //Add Planning Variable annotation">
+      @PlanningVariable(valueRangeProviderRefs = "selected")
+    </pre>
 
     In this example, because our planning variable is a `Boolean` value, the _valuerange_ is simply `true` and `false`. We will define this provider in the next step.
 
@@ -266,16 +223,11 @@ challenges:
 
     In our application, we need to have an object that defines the maximum weight of our knapsack. So we will implement a simple `Knapsack` class that has a `maxWeight` attribute that can hold this value.
 
-    ## Implement the Knapsack class
+    Click the following line to open a new `Knapsack.java` file in this package: `knapsack-optaplanner-quarkus/src/main/java/com/redhat/knapsackoptaplanner/domain/Knapsack.java`
 
-    In the `Visual Editor`:
-    1. Navigate to the folder `src/main/java/com/redhat/knapsackoptaplanner/domain`
-    2. Add a new file `Knapsack.java` (_by clicking on the left icon next to the `domain` folder name_)
-    3. Click the `Knapsack.java` class file to open it.
+    Click _Copy to Editor_ to add a class with a single `maxWeight` attribute.
 
-    Now, add this code to `Knapsack.java` to create a class with a single `maxWeight` attribute:
-
-    ```
+    <pre class="file" data-filename="./knapsack-optaplanner-quarkus/src/main/java/com/redhat/knapsackoptaplanner/domain/Knapsack.java" data-target="replace">
     package com.redhat.knapsackoptaplanner.domain;
 
     public class Knapsack {
@@ -294,24 +246,21 @@ challenges:
         }
 
     }
-    ```
-    ## Save your work
-
-    Before proceeding, remember to save both files by clicking on the save icon next to each filename.
+    </pre>
 
     ## Congratulations!
 
     We've implemented the domain model of our OptaPlanner Quarkus application. In the next step, we will implement the _PlanningSolution_ of our application.
   tabs:
-  - title: Visual Editor
-    type: code
-    hostname: crc
-    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus
   - title: Terminal 1
     type: terminal
     hostname: crc
+  - title: Visual Editor
+    type: code
+    hostname: crc
+    path: /root
   difficulty: basic
-  timelimit: 600
+  timelimit: 200
 - slug: 03-implement-planning-solution
   id: sxlyaufvmrtq
   type: challenge
@@ -451,15 +400,15 @@ challenges:
 
     In this step you've implemented the `PlanningSolution` of your application. Well done! In the next step we will implement the constraints of our problem using `ConstraintStreams`.
   tabs:
-  - title: Visual Editor
-    type: code
-    hostname: crc
-    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus    
   - title: Terminal 1
     type: terminal
     hostname: crc
+  - title: Visual Editor
+    type: code
+    hostname: crc
+    path: /root
   difficulty: basic
-  timelimit: 600
+  timelimit: 200
 - slug: 04-constraints
   id: lq6ahnxb4ag8
   type: challenge
@@ -490,7 +439,7 @@ challenges:
 
     We will implement the `KnapsackConstraintProvider` class. To do this, click the following command to create a new package in our project:
 
-    ``
+    `mkdir -p /root/projects/kogito/knapsack-optaplanner-quarkus/src/main/java/com/redhat/knapsackoptaplanner/solver`
 
     Now click the following path to open a new `KnapsackConstraintProvider.java` file in this package: `knapsack-optaplanner-quarkus/src/main/java/com/redhat/knapsackoptaplanner/solver/KnapsackConstraintProvider.java`
 
@@ -558,15 +507,15 @@ challenges:
 
     In this step we've implemented our first OptaPlanner constraints using the `ConstraintStreams` API. In the next step we will implement our RESTful resource and test our application.
   tabs:
-  - title: Visual Editor
-    type: code
-    hostname: crc
-    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus    
   - title: Terminal 1
     type: terminal
     hostname: crc
+  - title: Visual Editor
+    type: code
+    hostname: crc
+    path: /root
   difficulty: basic
-  timelimit: 600
+  timelimit: 200
 - slug: 05-implement-rest-application
   id: j9adegxiqtjt
   type: challenge
@@ -644,7 +593,7 @@ challenges:
     hostname: crc
     path: /root
   difficulty: basic
-  timelimit: 600
+  timelimit: 200
 - slug: 06-deploy-on-openshift
   id: lwv4laqc9xsq
   type: challenge
@@ -676,5 +625,5 @@ challenges:
     hostname: crc
     path: /root
   difficulty: basic
-  timelimit: 600
-checksum: "1594226056902059511"
+  timelimit: 200
+checksum: "16126557727346332669"
