@@ -109,7 +109,7 @@ challenges:
     The Quarkus Maven plugin is now generating a basic Quarkus application that includes the OptaPlanner extension, and it is located inside the `knapsack-optaplanner-quarkus` subdirectory.
 
     For the purpose of this exercise, we won't use the automatically generated unit tests.
-  
+
     On `Terminal 1`, copy and paste the following command to remove the automatically generated unit-test classes:
     ```
     rm -rf /root/projects/optaplanner/knapsack-optaplanner-quarkus/src/test/java/com
@@ -153,362 +153,354 @@ challenges:
     You've practiced the initial steps of an OptaPlanner project by creating the skeleton of a basic Quarkus application, and starting it using Quarkus development mode.
 
     In the next step we'll start coding and add the domain model of our application.
+  difficulty: basic
+  timelimit: 600
+- slug: 02-implement-domain-model
+  id: ruzyyh7uscxp
+  type: challenge
+  title: Step 2
+  notes:
+  - type: text
+    contents: |
+      ## Foundation concepts you must check before moving foward
+      In this challenge, you will create the Java classes and configure them based on key OptaPlanner concepts. Every OptaPlanner application has planning entities (`@PlanningEntity` annotation) and planning variables (`@PlanningVariable` annotation), so let's familiar with these concepts:
+
+      **Planning Entities**
+      Planning entities are the entities in our domain that OptaPlanner _needs to plan_. In the knapsack problem, these are the ingots because these are the entities that are either put into the knapsack or not.
+
+      **Planning Variables**
+
+      Planning variables are properties of a planning entity that specify a planning value _that changes during planning_. In the knapsack problem, this is the property that tells OptaPlanner whether or not the ingot is _selected_. That is, whether or not it is put in the knapsack.
+      Note that in this example we have a single knapsack. If we have multiple knapsacks, the actual knapsack is the planning variable, because an ingot can be placed in different knapsacks.
+  assignment: |
+    In the previous step we've created a skeleton OptaPlanner application with Quarkus and started the application in Quarkus development mode. In this step we'll create the domain model of our application.
+
+    ## Implement the Ingot class
+
+    In the `Visual Editor`:
+    1. Navigate to the folder `src/main/java/com/redhat/knapsackoptaplanner/domain`
+    2. Add a new file `Ingot.java` (_by clicking on the left icon next to the `domain` folder name_)
+    3. Click the `Ingot.java` class file to open it.
+
+    Now, let's add the following initial code your class. Copy and paste the source code into the class `Ingot.java`:
+
+    ```
+    package com.redhat.knapsackoptaplanner.domain;
+
+    import org.optaplanner.core.api.domain.entity.PlanningEntity;
+    import org.optaplanner.core.api.domain.variable.PlanningVariable;
+
+    /**
+     * Ingot
+        */
+
+      //Add PlanningEntity annotation
+      public class Ingot {
+
+        private int weight;
+
+        private int value;
+
+        //Add Planning Variable annotation
+        private Boolean selected;
+
+        public Ingot() {
+        }
+
+        public int getWeight() {
+            return weight;
+        }
+
+        public void setWeight(int weight) {
+            this.weight = weight;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
+
+        public Boolean getSelected() {
+            return selected;
+        }
+
+        public void setSelected(Boolean selected) {
+            this.selected = selected;
+        }
+
+    }
+    ```
+
+    ## Configuring the Planning Entity and Planning PlanningVariables
+
+    ## Planning Entity
+
+    First, let's tell OptaPlanner that this Ingot class is our `PlanningEntity` class. To do this, on line 11, annotate the class by adding:
+    ```
+    @PlanningEntity
+    ```
+
+    It should look like this:
+
+    ```
+    //Add PlanningEntity annotation
+    @PlanningEntity
+    public class Ingot {
+    ```
+
+    ## Planning Variable
+
+    Next, we need to configure our planning variable.
+
+    In this example, the planning variable (the property that changes during planning) is the `selected` attribute of the planning entity class.
+    Annotate this attribute with the `@PlanningVariable` annotation and specify the _valuerange provider_. This is the entity in our application that provides the range of possible values of our planning variable.
+
+    On line 19, annotate the `selected` attribute by adding:
+
+    ```
+    @PlanningVariable(valueRangeProviderRefs = "selected")
+    ```
+
+    It should look like this:
+    ```
+    //Add Planning Variable annotation
+    @PlanningVariable(valueRangeProviderRefs = "selected")
+    private Boolean selected;
+    ```
+
+    In this example, because our planning variable is a `Boolean` value, the _valuerange_ is simply `true` and `false`. We will define this provider in the next step.
+
+    ## Save your work
+
+    Before proceeding, remember to save the file by clicking on the save icon next to the filename.
+
+    ## Knapsack
+
+    We now need an object that defines the maximum weight of our knapsack. So let's implement a simple `Knapsack` class that has a `maxWeight` attribute that can hold this value.
+
+    In the `Visual Editor`:
+    1. Navigate to the folder `src/main/java/com/redhat/knapsackoptaplanner/domain`
+    2. Add a new file `Knapsack.java` (_by clicking on the left icon next to the `domain` folder name_)
+    3. Click the `Knapsack.java` class file to open it.
+
+    Now, copy and paste the following `Knapsack.java`. It's a class with a single `maxWeight` attribute:
+    ```
+    package com.redhat.knapsackoptaplanner.domain;
+
+    public class Knapsack {
+
+        private int maxWeight;
+
+        public Knapsack() {
+        }
+
+        public int getMaxWeight() {
+            return maxWeight;
+        }
+
+        public void setMaxWeight(int maxWeight) {
+            this.maxWeight = maxWeight;
+        }
+
+    }
+    ```
+    ## Save your work
+
+    Before proceeding, remember to save both files by clicking on the save icon next to each filename.
+
+    ## Congratulations!
+
+    You successfully implemented the domain model of our OptaPlanner application, which is a key piece of our planning solution.
+
+    In the next step, we will implement the actual _Planning Solution_ of this app.
   tabs:
+  - title: Visual Editor
+    type: code
+    hostname: crc
+    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus
   - title: Terminal 1
     type: terminal
     hostname: crc
   difficulty: basic
   timelimit: 600
-  - slug: 02-implement-domain-model
-    id: ruzyyh7uscxp
-    type: challenge
-    title: Step 2
-    notes:
-    - type: text
-      contents: |
-        ## Foundation concepts you must check before moving foward
-        In this challenge, you will create the Java classes and configure them based on key OptaPlanner concepts. Every OptaPlanner application has planning entities (`@PlanningEntity` annotation) and planning variables (`@PlanningVariable` annotation), so let's familiar with these concepts:
-        
-        **Planning Entities**
-        Planning entities are the entities in our domain that OptaPlanner _needs to plan_. In the knapsack problem, these are the ingots because these are the entities that are either put into the knapsack or not.
+- slug: 03-implement-planning-solution
+  id: sxlyaufvmrtq
+  type: challenge
+  title: Step 3
+  notes:
+  - type: text
+    contents: |
+      In the previous step we've implemented the domain model of the application. Now it's time to implement the *planning solution*.
 
-        **Planning Variables**
-      
-        Planning variables are properties of a planning entity that specify a planning value _that changes during planning_. In the knapsack problem, this is the property that tells OptaPlanner whether or not the ingot is _selected_. That is, whether or not it is put in the knapsack. 
-        Note that in this example we have a single knapsack. If we have multiple knapsacks, the actual knapsack is the planning variable, because an ingot can be placed in different knapsacks.
-      assignment: |
-        In the previous step we've created a skeleton OptaPlanner application with Quarkus and started the application in Quarkus development mode. In this step we'll create the domain model of our application.
+      The planning solution of represents both:
+      - the problem (i.e. the uninitialized solution),
+      - the working solution, and
+      - the best solution which is the solution returned by OptaPlanner when solving is ended.
 
-        ## Implement the Ingot class
+      So, since we need to represent the problem, working solution and best solution, in this knacksack problem, an inplementation should contains:
 
-        In the `Visual Editor`:
-        1. Navigate to the folder `src/main/java/com/redhat/knapsackoptaplanner/domain`
-        2. Add a new file `Ingot.java` (_by clicking on the left icon next to the `domain` folder name_)
-        3. Click the `Ingot.java` class file to open it.
+      * The collection of planning entities that need to be planned. In this case, this is a list of `Ingots`.
+      * Zero or more collections/ranges of planning variables. In this simple example we only have a range of boolean values (i.e. `true` and `false`) that indicate whether an ingot has been selected or not.
+      * Possible problem fact properties. These are properties that are neither a planning entity nor a planning variable, but are required by the constraints during solving. In this example the `Knapsack` is such a property because the problem requires the maximum weight of the knapsack in the constraint evaluation.
+      * The `Score` of the solution. This contains the score calculated by the OptaPlanner `ScoreCalculator` based on the hard and soft constraints.
+  assignment: |
+    ## PlanningSolution
 
-        Now, let's add the following initial code your class. Copy and paste the source code into the class `Ingot.java`:
+    As stated before, we'll now implement a `PlanningSolution` class with:
 
-        ```
-        package com.redhat.knapsackoptaplanner.domain;
+    * list of `Ingots`: the collection of planning entities (_need to be planned_).
+    * Range of boolean values (`true` and `false`) to indicate whether an ingot has been selected or not: zero or more collections/ranges of planning variables.
+    * The `Knapsack` which holds the maximum weight of the knapsack in the constraint evaluation: possible problem fact properties
+    * The `ScoreCalculator`: representing the `Score` of the solution calculated by OptaPlanner based on the hard and soft constraints.
 
-        import org.optaplanner.core.api.domain.entity.PlanningEntity;
-        import org.optaplanner.core.api.domain.variable.PlanningVariable;
+    ## Implementing the planning solution
 
-        /**
-         * Ingot
-            */
+    It's time to implement the skeleton of our `KnapsackSolution` class.
 
-          //Add PlanningEntity annotation
-          public class Ingot {
+    In the `Visual Editor`:
+    1. Navigate to the folder `src/main/java/com/redhat/knapsackoptaplanner/domain`
+    2. Add a new file `KnapsackSolution.java` (_by clicking on the left icon next to the `domain` folder name_)
+    3. Click the `KnapsackSolution.java` class file to open it.
 
-            private int weight;
+    Copy and paste the source code below into the new `KnapsackSolution.java` class:
 
-            private int value;
+    ```
+    package com.redhat.knapsackoptaplanner.domain;
 
-            //Add Planning Variable annotation
-            private Boolean selected;
+    import java.util.List;
 
-            public Ingot() {
-            }
+    import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
+    import org.optaplanner.core.api.domain.solution.PlanningScore;
+    import org.optaplanner.core.api.domain.solution.PlanningSolution;
+    import org.optaplanner.core.api.domain.solution.drools.ProblemFactProperty;
+    import org.optaplanner.core.api.domain.valuerange.CountableValueRange;
+    import org.optaplanner.core.api.domain.valuerange.ValueRangeFactory;
+    import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
+    import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 
-            public int getWeight() {
-                return weight;
-            }
+    //Add PlanningSolution annotation here
+    public class KnapsackSolution {
 
-            public void setWeight(int weight) {
-                this.weight = weight;
-            }
+    //Add Ingots here
 
-            public int getValue() {
-                return value;
-            }
+    //Add Knapsack here
 
-            public void setValue(int value) {
-                this.value = value;
-            }
+    //Add selected valuerangeprovider here
 
-            public Boolean getSelected() {
-                return selected;
-            }
+    //Add PlanningScore here
 
-            public void setSelected(Boolean selected) {
-                this.selected = selected;
-            }
+    public KnapsackSolution() {
+    }
 
-        }
-        ```
+    //Add getters and setters here
+    }
+    ```
 
-        ## Configuring the Planning Entity and Planning PlanningVariables
+    To mark this class as a `PlanningSolution` class, add the `@PlanningSolution` annotation:
 
-        ## Planning Entity
+    ```
+    @PlanningSolution
+    ```
 
-        First, let's tell OptaPlanner that this Ingot class is our `PlanningEntity` class. To do this, on line 11, annotate the class by adding:  
-        ```
-        @PlanningEntity
-        ```
-    
-        It should look like this:
+    ### Planning Entities
 
-        ```
-        //Add PlanningEntity annotation
-        @PlanningEntity
-        public class Ingot {
-        ```
+    We can now add the collection of planning entities to our class. As stated earlier, in this implementation this is a list of ingots.
+    To tell OptaPlanner that this is the collection of planning entities, let's annotate this field with the `@PlanningEntityCollectionProperty` annotation
+    ```
+      @PlanningEntityCollectionProperty
+      private List&lt;Ingot&gt; ingots;
+    ```
 
-        ## Planning Variable
+    ### Value range Provider
 
-        Next, we need to configure our planning variable. 
+    Next, we can add the _value range provider_ to our solution class. This is the provider of the value range of our `selected` planning variable in the `Ingot` planning entity class.
 
-        In this example, the planning variable (the property that changes during planning) is the `selected` attribute of the planning entity class. 
-        Annotate this attribute with the `@PlanningVariable` annotation and specify the _valuerange provider_. This is the entity in our application that provides the range of possible values of our planning variable.
+    Because this planning variable is a boolean value, we need to create a `Boolean` value range.
 
-        On line 19, annotate the `selected` attribute by adding: 
+    ```
+    @ValueRangeProvider(id = "selected")
+    public CountableValueRange<Boolean> getSelected() {
+      return ValueRangeFactory.createBooleanValueRange();
+    }
+    ```
 
-        ```
-        @PlanningVariable(valueRangeProviderRefs = "selected")
-        ```
+    ### Problem Facts
 
-        It should look like this: 
-        ```
-        //Add Planning Variable annotation
-        @PlanningVariable(valueRangeProviderRefs = "selected")
-        private Boolean selected;
-        ```
+    The constraints that we will implement in the following step of our scenario need to know the maximum weight of our knapsack to be able to determine whether the knapsack can carry the total weight of the selected ingots.
 
-        In this example, because our planning variable is a `Boolean` value, the _valuerange_ is simply `true` and `false`. We will define this provider in the next step.
+    For this reason, our constraints need to have access to the `Knapsack` instance.
 
-        ## Save your work
+    Create a knapsack attribute in the planning solution and annotate it with the `@ProblemFactProperty` annotation.
 
-        Before proceeding, remember to save the file by clicking on the save icon next to the filename.
+    _TIP: (note that there is also an `@ProblemFactCollectionProperty` annotation for collections)_
 
-        ## Knapsack
+    ```
+      @ProblemFactProperty
+      private Knapsack knapsack;
+    ```
 
-        We now need an object that defines the maximum weight of our knapsack. So let's implement a simple `Knapsack` class that has a `maxWeight` attribute that can hold this value.
+    ### Creating the Planning Score
 
-        In the `Visual Editor`:
-        1. Navigate to the folder `src/main/java/com/redhat/knapsackoptaplanner/domain`
-        2. Add a new file `Knapsack.java` (_by clicking on the left icon next to the `domain` folder name_)
-        3. Click the `Knapsack.java` class file to open it.
+    The next thing we need to add is the `PlanningScore`.
 
-        Now, copy and paste the following `Knapsack.java`. It's a class with a single `maxWeight` attribute:
-        ```
-        package com.redhat.knapsackoptaplanner.domain;
+    In this knapsack problem we have two score types: a _hard score_ and a _soft score_.
 
-        public class Knapsack {
+    **INFO:** In OptaPlanner, a broken hard score defines an _infeasible solution_. The soft score is the score that we want to optimize.
 
-            private int maxWeight;
+    In our knapsack application, an example of:
+    - a broken hard score:  if the total weight of the selected ingots is higher than the maximum weight of the knapsack.
+    - a soft score constraint: the total value of the selected ingots. We want a solution with the highest possible values.
 
-            public Knapsack() {
-            }
+    Next, add to the planning solution class a `HardSoftScore` attribute annotated with `@PlanningScore`:
 
-            public int getMaxWeight() {
-                return maxWeight;
-            }
+    ```
+      @PlanningScore
+      private HardSoftScore score;
+    ```
 
-            public void setMaxWeight(int maxWeight) {
-                this.maxWeight = maxWeight;
-            }
+    ### Getters and Setters
 
-        }
-        ```
-        ## Save your work
+    Finally, we also need to create the _getters and setters_ for our attributes.
 
-        Before proceeding, remember to save both files by clicking on the save icon next to each filename.
+    ```
+      public List&lt;Ingot&gt; getIngots() {
+          return ingots;
+      }
 
-        ## Congratulations!
+      public void setIngots(List&lt;Ingot&gt; ingots) {
+          this.ingots = ingots;
+      }
 
-        You successfully implemented the domain model of our OptaPlanner application, which is a key piece of our planning solution.
+      public Knapsack getKnapsack() {
+          return knapsack;
+      }
 
-        In the next step, we will implement the actual _Planning Solution_ of this app.
-      tabs:
-    - title: Visual Editor
-      type: code
-      hostname: crc
-      path: /root/projects/optaplanner/knapsack-optaplanner-quarkus
-    - title: Terminal 1
-      type: terminal
-      hostname: crc
-    difficulty: basic
-    timelimit: 600
-  - slug: 03-implement-planning-solution
-    id: sxlyaufvmrtq
-    type: challenge
-    title: Step 3
-    notes:
-      - type: text
-      contents: |
-        In the previous step we've implemented the domain model of the application. Now it's time to implement the *planning solution*.
+      public void setKnapsack(Knapsack knapsack) {
+          this.knapsack = knapsack;
+      }
 
-        The planning solution of represents both:
-        - the problem (i.e. the uninitialized solution),
-        - the working solution, and
-        - the best solution which is the solution returned by OptaPlanner when solving is ended.
+      public HardSoftScore getScore() {
+          return score;
+      }
 
-        So, since we need to represent the problem, working solution and best solution, in this knacksack problem, an inplementation should contains:
+      public void setScore(HardSoftScore score) {
+          this.score = score;
+      }
+    ```
 
-        * The collection of planning entities that need to be planned. In this case, this is a list of `Ingots`.
-        * Zero or more collections/ranges of planning variables. In this simple example we only have a range of boolean values (i.e. `true` and `false`) that indicate whether an ingot has been selected or not.
-        * Possible problem fact properties. These are properties that are neither a planning entity nor a planning variable, but are required by the constraints during solving. In this example the `Knapsack` is such a property because the problem requires the maximum weight of the knapsack in the constraint evaluation.
-        * The `Score` of the solution. This contains the score calculated by the OptaPlanner `ScoreCalculator` based on the hard and soft constraints.
+    That's it. We're now ready to define our constraints.
 
-      assignment: |
-        ## PlanningSolution
+    ## Congratulations!
 
-        As stated before, we'll now implement a `PlanningSolution` class with:
-
-        * list of `Ingots`: the collection of planning entities (_need to be planned_).
-        * Range of boolean values (`true` and `false`) to indicate whether an ingot has been selected or not: zero or more collections/ranges of planning variables.
-        * The `Knapsack` which holds the maximum weight of the knapsack in the constraint evaluation: possible problem fact properties
-        * The `ScoreCalculator`: representing the `Score` of the solution calculated by OptaPlanner based on the hard and soft constraints.
-
-        ## Implementing the planning solution
-
-        It's time to implement the skeleton of our `KnapsackSolution` class.
-
-        In the `Visual Editor`:
-        1. Navigate to the folder `src/main/java/com/redhat/knapsackoptaplanner/domain`
-        2. Add a new file `KnapsackSolution.java` (_by clicking on the left icon next to the `domain` folder name_)
-        3. Click the `KnapsackSolution.java` class file to open it.
-
-        Copy and paste the source code below into the new `KnapsackSolution.java` class:
-
-        ```
-        package com.redhat.knapsackoptaplanner.domain;
-
-        import java.util.List;
-
-        import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
-        import org.optaplanner.core.api.domain.solution.PlanningScore;
-        import org.optaplanner.core.api.domain.solution.PlanningSolution;
-        import org.optaplanner.core.api.domain.solution.drools.ProblemFactProperty;
-        import org.optaplanner.core.api.domain.valuerange.CountableValueRange;
-        import org.optaplanner.core.api.domain.valuerange.ValueRangeFactory;
-        import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
-        import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
-
-        //Add PlanningSolution annotation here
-        public class KnapsackSolution {
-
-        //Add Ingots here
-
-        //Add Knapsack here
-
-        //Add selected valuerangeprovider here
-
-        //Add PlanningScore here
-
-        public KnapsackSolution() {
-        }
-
-        //Add getters and setters here
-        }
-        ```
-
-        To mark this class as a `PlanningSolution` class, add the `@PlanningSolution` annotation:
-
-        ```
-        @PlanningSolution
-        ```
-
-
-      ### Planning Entities
-
-      We can now add the collection of planning entities to our class. As stated earlier, in this implementation this is a list of ingots.
-
-      To tell OptaPlanner that this is the collection of planning entities, let's annotate this field with the `@PlanningEntityCollectionProperty` annotation:
-
-      ```
-        @PlanningEntityCollectionProperty
-        private List&lt;Ingot&gt; ingots;
-      ```
-
-      ### Value range Provider
-
-      Next, we can add the _value range provider_ to our solution class. This is the provider of the value range of our `selected` planning variable in the `Ingot` planning entity class.
-
-      Because this planning variable is a boolean value, we need to create a `Boolean` value range.
-
-      ```
-        @ValueRangeProvider(id = "selected")
-        public CountableValueRange<Boolean> getSelected() {
-          return ValueRangeFactory.createBooleanValueRange();
-        }
-      ```
-
-      ### Problem Facts
-
-      The constraints that we will implement in the following step of our scenario need to know the maximum weight of our knapsack to be able to determine whether the knapsack can carry the total weight of the selected ingots.
-
-      For this reason, our constraints need to have access to the `Knapsack` instance.
-
-      Create a knapsack attribute in the planning solution and annotate it with the `@ProblemFactProperty` annotation.
-
-      _TIP: (note that there is also an `@ProblemFactCollectionProperty` annotation for collections)_
-
-      ```
-        @ProblemFactProperty
-        private Knapsack knapsack;
-      ```
-
-      ### Creating the Planning Score
-
-      The next thing we need to add is the `PlanningScore`.
-
-      In this knapsack problem we have two score types: a _hard score_ and a _soft score_.
-
-      **INFO:** In OptaPlanner, a broken hard score defines an _infeasible solution_. The soft score is the score that we want to optimize.
-
-      In our knapsack application, an example of:
-      - a broken hard score:  if the total weight of the selected ingots is higher than the maximum weight of the knapsack.
-      - a soft score constraint: the total value of the selected ingots. We want a solution with the highest possible values.
-
-      Next, add to the planning solution class a `HardSoftScore` attribute annotated with `@PlanningScore`:
-
-      ```
-        @PlanningScore
-        private HardSoftScore score;
-      ```
-
-      ### Getters and Setters
-
-      Finally, we also need to create the _getters and setters_ for our attributes.
-
-      ```
-        public List&lt;Ingot&gt; getIngots() {
-            return ingots;
-        }
-
-        public void setIngots(List&lt;Ingot&gt; ingots) {
-            this.ingots = ingots;
-        }
-
-        public Knapsack getKnapsack() {
-            return knapsack;
-        }
-
-        public void setKnapsack(Knapsack knapsack) {
-            this.knapsack = knapsack;
-        }
-
-        public HardSoftScore getScore() {
-            return score;
-        }
-
-        public void setScore(HardSoftScore score) {
-            this.score = score;
-        }
-      ```
-
-      That's it. We're now ready to define our constraints.
-
-      ## Congratulations!
-
-      In this step you've implemented the `PlanningSolution` of your application. Well done! In the next step we will implement the constraints of our problem using `ConstraintStreams`.
+    In this step you've implemented the `PlanningSolution` of your application. Well done! In the next step we will implement the constraints of our problem using `ConstraintStreams`.
   tabs:
   - title: Visual Editor
     type: code
     hostname: crc
-    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus    
+    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus
   - title: Terminal 1
     type: terminal
     hostname: crc
@@ -615,7 +607,7 @@ challenges:
   - title: Visual Editor
     type: code
     hostname: crc
-    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus    
+    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus
   - title: Terminal 1
     type: terminal
     hostname: crc
@@ -731,4 +723,4 @@ challenges:
     path: /root
   difficulty: basic
   timelimit: 600
-checksum: "1594226056902059511"
+checksum: "15888809062966556773"
