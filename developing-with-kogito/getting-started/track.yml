@@ -3,7 +3,7 @@ id: 7tdsxmrdskia
 type: track
 title: Getting Started with Kogito
 description: |
-  In this scenario, you will get an introduction to [Kogito](https://kogito.kie.org).
+  In this scenario, you will get an introduction to business automation using [Kogito](https://kogito.kie.org).
 
   ## What is Kogito?
 
@@ -47,8 +47,8 @@ developers:
 - nvinto@redhat.com
 - rjarvine@redhat.com
 - dahmed@redhat.com
-- kvarela@redhat.com
-private: false
+- kmacedovarela@gmail.com
+private: true
 published: true
 challenges:
 - slug: 01-create-project
@@ -798,4 +798,4 @@ challenges:
     path: /root
   difficulty: basic
   timelimit: 100
-checksum: "4317740113866171022"
+checksum: "2609839629744391632"
