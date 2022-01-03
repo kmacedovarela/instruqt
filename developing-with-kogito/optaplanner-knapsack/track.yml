@@ -421,7 +421,7 @@ challenges:
     To tell OptaPlanner that this is the collection of planning entities, let's annotate this field with the `@PlanningEntityCollectionProperty` annotation
     ```
       @PlanningEntityCollectionProperty
-      private List&lt;Ingot&gt; ingots;
+      private List<Ingot> ingots;
     ```
 
     ### Value range Provider
@@ -476,11 +476,11 @@ challenges:
     Finally, we also need to create the _getters and setters_ for our attributes.
 
     ```
-      public List&lt;Ingot&gt; getIngots() {
+      public List<Ingot> getIngots() {
           return ingots;
       }
 
-      public void setIngots(List&lt;Ingot&gt; ingots) {
+      public void setIngots(List<Ingot> ingots) {
           this.ingots = ingots;
       }
 
@@ -554,7 +554,7 @@ challenges:
     We will implement the `KnapsackConstraintProvider` class. In the `Visual Editor`:
 
     1. Navigate to the folder `src/main/java/com/redhat/knapsackoptaplanner/solver`
-    2. Add a new file `KnapsackConstraintProvider.java` (_by clicking on the left icon next to the `domain` folder name_)
+    2. Add a new file `KnapsackConstraintProvider.java` (_by clicking on the left icon next to the `solver` folder name_)
     3. Click the `KnapsackConstraintProvider.java` class file to open it.
 
     Copy the class below and paste in the new class. It is a basic implementation of a ConstraintProvider interface:
@@ -670,7 +670,7 @@ challenges:
     @Produces(MediaType.APPLICATION_JSON)
     public class KnapsackResource {
         @Inject
-        private SolverManager&lt;KnapsackSolution, UUID&gt; solverManager;
+        private SolverManager<KnapsackSolution, UUID> solverManager;
 
         @POST
         @Path("/solve")
@@ -678,7 +678,7 @@ challenges:
           UUID problemId = UUID.randomUUID();
 
           // Submit the problem to start solving
-          SolverJob&lt;KnapsackSolution,UUID&gt; solverJob = solverManager.solve(problemId, problem);
+          SolverJob<KnapsackSolution,UUID> solverJob = solverManager.solve(problemId, problem);
           KnapsackSolution solution;
 
           try {
@@ -749,10 +749,13 @@ challenges:
   - title: Terminal 1
     type: terminal
     hostname: crc
+  - title: Terminal 2
+    type: terminal
+    hostname: crc
   - title: Visual Editor
     type: code
     hostname: crc
-    path: /root
+    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus
   difficulty: basic
   timelimit: 600
 - slug: 06-deploy-on-openshift
@@ -781,10 +784,17 @@ challenges:
   - title: Terminal 1
     type: terminal
     hostname: crc
+  - title: Terminal 2
+    type: terminal
+    hostname: crc
   - title: Visual Editor
     type: code
+    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus
     hostname: crc
-    path: /root
+  - title: OpenShift Web Console
+    type: website
+    url: https://console-openshift-console.crc-dzk9v-master-0.crc.${_SANDBOX_ID}.instruqt.io
+    new_window: true
   difficulty: basic
   timelimit: 600
 checksum: "10251489941810137790"
