@@ -372,35 +372,36 @@ challenges:
     Copy and paste the source code below into the new `KnapsackSolution.java` class:
 
     ```
-    package com.redhat.knapsackoptaplanner.domain;
+      package com.redhat.knapsackoptaplanner.domain;
 
-    import java.util.List;
+      import java.util.List;
 
-    import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
-    import org.optaplanner.core.api.domain.solution.PlanningScore;
-    import org.optaplanner.core.api.domain.solution.PlanningSolution;
-    import org.optaplanner.core.api.domain.solution.drools.ProblemFactProperty;
-    import org.optaplanner.core.api.domain.valuerange.CountableValueRange;
-    import org.optaplanner.core.api.domain.valuerange.ValueRangeFactory;
-    import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
-    import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
+      import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
+      import org.optaplanner.core.api.domain.solution.PlanningScore;
+      import org.optaplanner.core.api.domain.solution.PlanningSolution;
+      import org.optaplanner.core.api.domain.solution.drools.ProblemFactProperty;
+      import org.optaplanner.core.api.domain.valuerange.CountableValueRange;
+      import org.optaplanner.core.api.domain.valuerange.ValueRangeFactory;
+      import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
+      import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 
-    //Add PlanningSolution annotation here
-    public class KnapsackSolution {
+      //Add PlanningSolution annotation here
 
-    //Add Ingots here
+      public class KnapsackSolution {
 
-    //Add Knapsack here
+        //Add Ingots here
 
-    //Add selected valuerangeprovider here
 
-    //Add PlanningScore here
+        //Add Knapsack here
 
-    public KnapsackSolution() {
-    }
+        //Add selected valuerangeprovider here
 
-    //Add getters and setters here
-    }
+        //Add PlanningScore here
+
+        public KnapsackSolution() {
+        }
+
+       //Add getters and setters here
     ```
 
     To mark this class as a `PlanningSolution` class, add the `@PlanningSolution` annotation:
@@ -431,10 +432,10 @@ challenges:
     Because this planning variable is a boolean value, we need to create a `Boolean` value range:
 
     ```
-    @ValueRangeProvider(id = "selected")
-    public CountableValueRange<Boolean> getSelected() {
-      return ValueRangeFactory.createBooleanValueRange();
-    }
+      @ValueRangeProvider(id = "selected")
+      public CountableValueRange<Boolean> getSelected() {
+           return ValueRangeFactory.createBooleanValueRange();
+      }
     ```
 
     ### Problem Facts
@@ -629,6 +630,7 @@ challenges:
   - title: Terminal 1
     type: terminal
     hostname: crc
+    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus
   difficulty: basic
   timelimit: 600
 - slug: 05-implement-rest-application
@@ -653,6 +655,7 @@ challenges:
 
     ```
     package com.redhat.knapsackoptaplanner.solver;
+
     import java.util.UUID;
     import java.util.concurrent.ExecutionException;
     import javax.inject.Inject;
@@ -669,27 +672,28 @@ challenges:
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public class KnapsackResource {
-        @Inject
-        private SolverManager<KnapsackSolution, UUID> solverManager;
 
-        @POST
-        @Path("/solve")
-        public KnapsackSolution solve(KnapsackSolution problem) {
-          UUID problemId = UUID.randomUUID();
+      @Inject
+      private SolverManager<KnapsackSolution, UUID> solverManager;
 
-          // Submit the problem to start solving
-          SolverJob<KnapsackSolution,UUID> solverJob = solverManager.solve(problemId, problem);
-          KnapsackSolution solution;
+      @POST
+      @Path("/solve")
+      public KnapsackSolution solve(KnapsackSolution problem) {
+        UUID problemId = UUID.randomUUID();
 
-          try {
-            // Wait until the solving ends
-            solution = solverJob.getFinalBestSolution();
-          } catch (InterruptedException | ExecutionException e) {
-              throw new IllegalStateException("Solving failed.", e);
-          }
+        // Submit the problem to start solving
+        SolverJob<KnapsackSolution,UUID> solverJob = solverManager.solve(problemId, problem);
+        KnapsackSolution solution;
 
-          return solution;
+        try {
+          // Wait until the solving ends
+          solution = solverJob.getFinalBestSolution();
+        } catch (InterruptedException | ExecutionException e) {
+          throw new IllegalStateException("Solving failed.", e);
         }
+
+        return solution;
+      }
     }
     ```
 
@@ -719,26 +723,7 @@ challenges:
     You will see our `/knapsack/solve` RESTful API listed. We can now fire a RESTful request with a knapsack problem to this endpoint. We will do this from the terminal using cURL. Note that it will take 10 seconds for the response to return because we've set the OptaPlanner termination strategy to 10 seconds:
 
      ```
-      curl --location --request POST 'http://localhost:8080/knapsack/solve' \\
-        --header 'Accept: application/json' \\
-        --header 'Content-Type: application/json' \\
-        --data-raw '{
-          "knapsack": {
-            "maxWeight": 10
-          },
-          "ingots":[
-            { "weight": 4,"value":15 },
-            {"weight": 4,"value": 15},
-            {"weight":3,"value": 12},
-            {"weight": 3,"value":12},
-            {"weight": 3,"value": 12},
-            {"weight":2,"value": 7},
-            {"weight": 2,"value":7},
-            {"weight": 2,"value": 7},
-            {"weight": 2,"value": 7},
-            {"weight": 2,"value":7}
-           ]
-        }'
+      curl --location --request POST 'http://localhost:8080/knapsack/solve'  --header 'Accept: application/json'  --header 'Content-Type: application/json'  --data-raw '{"knapsack": {"maxWeight": 10, "ingots":[{ "weight": 4,"value":15 },{"weight": 4,"value": 15},{"weight":3,"value": 12},{"weight": 3,"value":12}, {"weight": 3,"value": 12},{"weight":2,"value": 7},{"weight": 2,"value":7},{"weight": 2,"value": 7},{"weight": 2,"value": 7},{"weight": 2,"value":7}]}'
     ```
 
     The response shows which ingots have been selected. These ingots will have their `selected` attribute set to `true`.
@@ -784,17 +769,19 @@ challenges:
   - title: Terminal 1
     type: terminal
     hostname: crc
+    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus
   - title: Terminal 2
     type: terminal
     hostname: crc
+    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus
   - title: Visual Editor
     type: code
-    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus
     hostname: crc
+    path: /root/projects/optaplanner/knapsack-optaplanner-quarkus
   - title: OpenShift Web Console
     type: website
     url: https://console-openshift-console.crc-dzk9v-master-0.crc.${_SANDBOX_ID}.instruqt.io
     new_window: true
   difficulty: basic
   timelimit: 600
-checksum: "10251489941810137790"
+checksum: "2144178365862592144"
