@@ -379,7 +379,7 @@ challenges:
       import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
       import org.optaplanner.core.api.domain.solution.PlanningScore;
       import org.optaplanner.core.api.domain.solution.PlanningSolution;
-      import org.optaplanner.core.api.domain.solution.drools.ProblemFactProperty;
+      import org.optaplanner.core.api.domain.solution.ProblemFactProperty;
       import org.optaplanner.core.api.domain.valuerange.CountableValueRange;
       import org.optaplanner.core.api.domain.valuerange.ValueRangeFactory;
       import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
@@ -401,13 +401,13 @@ challenges:
         public KnapsackSolution() {
         }
 
-       //Add getters and setters here
+        //Add getters and setters here
     ```
 
-    To mark this class as a `PlanningSolution` class, add the `@PlanningSolution` annotation:
+    To mark this class as a `PlanningSolution` class, add the `@PlanningSolution` annotation on line 15:
 
     ```
-    @PlanningSolution
+      @PlanningSolution
     ```
     It should look like:
     ```
@@ -418,24 +418,25 @@ challenges:
 
     ### Planning Entities
 
-    We can now add the collection of planning entities to our class. As stated earlier, in this implementation this is a list of ingots.
-    To tell OptaPlanner that this is the collection of planning entities, let's annotate this field with the `@PlanningEntityCollectionProperty` annotation
+    We can now add the collection of planning entities to our class. As stated earlier, in this implementation the list of ingots is a collection of planning entities.
+    Let's now add an ingots list and tell OptaPlanner that this is the collection of planning entities.
+    To do so, on line 19 add the following code on your class, and notice the annotation `@PlanningEntityCollectionProperty` annotation.
     ```
-      @PlanningEntityCollectionProperty
-      private List<Ingot> ingots;
+        @PlanningEntityCollectionProperty
+        private List<Ingot> ingots;
     ```
 
     ### Value range Provider
 
     Next, we can add the _value range provider_ to our solution class. This is the provider of the value range of our `selected` planning variable in the `Ingot` planning entity class.
 
-    Because this planning variable is a boolean value, we need to create a `Boolean` value range:
+    Because this planning variable is a boolean value, we need to create a `Boolean` value range. You can add the following code to your class:
 
     ```
-      @ValueRangeProvider(id = "selected")
-      public CountableValueRange<Boolean> getSelected() {
-           return ValueRangeFactory.createBooleanValueRange();
-      }
+        @ValueRangeProvider(id = "selected")
+        public CountableValueRange<Boolean> getSelected() {
+          return ValueRangeFactory.createBooleanValueRange();
+        }
     ```
 
     ### Problem Facts
@@ -444,13 +445,13 @@ challenges:
 
     For this reason, our constraints need to have access to the `Knapsack` instance.
 
-    Create a knapsack attribute in the planning solution and annotate it with the `@ProblemFactProperty` annotation.
+    Let's now create on line 23, a knapsack attribute in the planning solution and annotate it with the `@ProblemFactProperty` annotation.
 
     _TIP: (note that there is also an `@ProblemFactCollectionProperty` annotation for collections)_
 
     ```
-      @ProblemFactProperty
-      private Knapsack knapsack;
+        @ProblemFactProperty
+        private Knapsack knapsack;
     ```
 
     ### Creating the Planning Score
@@ -468,8 +469,8 @@ challenges:
     Next, add to the planning solution class a `HardSoftScore` attribute annotated with `@PlanningScore`:
 
     ```
-      @PlanningScore
-      private HardSoftScore score;
+        @PlanningScore
+        private HardSoftScore score;
     ```
 
     ### Getters and Setters
@@ -477,29 +478,29 @@ challenges:
     Finally, we also need to create the _getters and setters_ for our attributes.
 
     ```
-      public List<Ingot> getIngots() {
-          return ingots;
-      }
+        public List<Ingot> getIngots() {
+            return ingots;
+        }
 
-      public void setIngots(List<Ingot> ingots) {
-          this.ingots = ingots;
-      }
+        public void setIngots(List<Ingot> ingots) {
+            this.ingots = ingots;
+        }
 
-      public Knapsack getKnapsack() {
-          return knapsack;
-      }
+        public Knapsack getKnapsack() {
+            return knapsack;
+        }
 
-      public void setKnapsack(Knapsack knapsack) {
-          this.knapsack = knapsack;
-      }
+        public void setKnapsack(Knapsack knapsack) {
+            this.knapsack = knapsack;
+        }
 
-      public HardSoftScore getScore() {
-          return score;
-      }
+        public HardSoftScore getScore() {
+            return score;
+        }
 
-      public void setScore(HardSoftScore score) {
-          this.score = score;
-      }
+        public void setScore(HardSoftScore score) {
+            this.score = score;
+        }
     ```
 
     That's it. We're now ready to define our constraints.
@@ -582,16 +583,16 @@ challenges:
           };
       }
 
-        /*
-         * Hard constraint
-         */
-         //Add hard constraint here
+      /*
+      * Hard constraint
+      */
+      //Add hard constraint here
 
 
-        /*
-         * Soft constraint
-         */
-        //Add soft constraint here
+      /*
+      * Soft constraint
+      */
+      //Add soft constraint here
 
 
     }
@@ -599,24 +600,24 @@ challenges:
 
     **The hard constraint**: sums up the weight of all selected ingots and compares this with the maximum weight of the knapsack.
 
-    Add the hard constraint to the `KnapsackConstraintProvider` class:
+    Add the hard constraint to the `KnapsackConstraintProvider` class on line 26:
     ```
-      private Constraint maxWeight(ConstraintFactory constraintFactory) {
-        return constraintFactory.from(Ingot.class).filter(i -> i.getSelected())
-                .groupBy(ConstraintCollectors.sum(i -> i.getWeight())).join(Knapsack.class)
-                .filter((ws, k) -> ws > k.getMaxWeight())
-                .penalize("Max Weight", HardSoftScore.ONE_HARD, (ws, k) -> ws - k.getMaxWeight());
-      }
+        private Constraint maxWeight(ConstraintFactory constraintFactory) {
+          return constraintFactory.from(Ingot.class).filter(i -> i.getSelected())
+                  .groupBy(ConstraintCollectors.sum(i -> i.getWeight())).join(Knapsack.class)
+                  .filter((ws, k) -> ws > k.getMaxWeight())
+                  .penalize("Max Weight", HardSoftScore.ONE_HARD, (ws, k) -> ws - k.getMaxWeight());
+        }
     ```
 
     **The soft constraints**: sums up all the values of the selected ingots.
     Add the soft constraint to the `KnapsackConstraintProvider` class:
     ```
-      private Constraint maxValue(ConstraintFactory constraintFactory) {
-        return constraintFactory.from(Ingot.class)
-                .filter(Ingot::getSelected)
-                .reward("Max Value", HardSoftScore.ONE_SOFT, Ingot::getValue);
-      }
+        private Constraint maxValue(ConstraintFactory constraintFactory) {
+          return constraintFactory.from(Ingot.class)
+                  .filter(Ingot::getSelected)
+                  .reward("Max Value", HardSoftScore.ONE_SOFT, Ingot::getValue);
+        }
     ```
 
     ## Congratulations!
@@ -703,7 +704,7 @@ challenges:
 
     OptaPlanner will keep solving the problem indefinitely if we don't configure a _termination strategy_. A _termnination strategy_ tells OptaPlanner when to stop solving, for example based on the number of seconds spent, or if a score has not improved in a specified amount of time.
 
-    In an OptaPlanner Quarkus application, we can set this _termination strategy_ by simply adding a configuration property in the Quarkus`application.properties` configuration file.
+    In an OptaPlanner Quarkus application, we can set this _termination strategy_ by simply adding a configuration property in the Quarkus `application.properties` configuration file.
 
     Let's first open the application.properties in the `Visual Editor`:
       - Locate the directory: `knapsack-optaplanner-quarkus/src/main/resources/`
@@ -716,14 +717,17 @@ challenges:
     quarkus.optaplanner.solver.termination.spent-limit=10s
     ```
 
+    Save the files.
+
     The `quarkus.optaplanner.solver.termination.spent-limit` property is set to 10 seconds, which means that the solver will stop solving after 10 seconds and return the best result found so far.
 
     ## Running the Application
-    Because we still have our application running in Quarkus development mode, we can simply access the Swagger-UI of our application by clicking [here](https://[[CLIENT_SUBDOMAIN]]-8080-[[KATACODA_HOST]].environments.katacoda.com/swagger-ui). Hitting this endpoint will force the OptaPlanner Quarkus application to do a hot-reload and recompile and deploy the changes we made in our application "on-the-fly".
+    Let's now switch to terminal one and start our application.
+    we still have our application running in Quarkus development mode, we can simply access the Swagger-UI of our application by clicking [here](https://[[CLIENT_SUBDOMAIN]]-8080-[[KATACODA_HOST]].environments.katacoda.com/swagger-ui). Hitting this endpoint will force the OptaPlanner Quarkus application to do a hot-reload and recompile and deploy the changes we made in our application "on-the-fly".
     You will see our `/knapsack/solve` RESTful API listed. We can now fire a RESTful request with a knapsack problem to this endpoint. We will do this from the terminal using cURL. Note that it will take 10 seconds for the response to return because we've set the OptaPlanner termination strategy to 10 seconds:
 
      ```
-      curl --location --request POST 'http://localhost:8080/knapsack/solve'  --header 'Accept: application/json'  --header 'Content-Type: application/json'  --data-raw '{"knapsack": {"maxWeight": 10, "ingots":[{ "weight": 4,"value":15 },{"weight": 4,"value": 15},{"weight":3,"value": 12},{"weight": 3,"value":12}, {"weight": 3,"value": 12},{"weight":2,"value": 7},{"weight": 2,"value":7},{"weight": 2,"value": 7},{"weight": 2,"value": 7},{"weight": 2,"value":7}]}'
+      curl --location --request POST 'http://localhost:8080/knapsack/solve' --header 'Accept: application/json' --header 'Content-Type: application/json' --header 'Content-Type: text/plain' --header 'Cookie: JSESSIONID=0C6C24091A814A4A0431ED5E32CE6B45' --data-raw '{"knapsack": { " maxWeight": 10 }, "ingots" : [ { "weight": 4, "value": 15 }, { "weight": 4, "value": 15 }, { "weight": 3, "value": 12}, { "weight": 3, "value": 12 }, { "weight": 3, "value": 12 }, { "weight": 2, "value": 7 }, { "weight": 2, "value": 7 }, { "weight": 2, "value": 7 }, { "weight": 2, "value": 7 }, { "weight": 2, "value": 7} ]}'
     ```
 
     The response shows which ingots have been selected. These ingots will have their `selected` attribute set to `true`.
@@ -737,6 +741,11 @@ challenges:
   - title: Terminal 2
     type: terminal
     hostname: crc
+  - title: Quarkus Swagger UI
+    type: service
+    hostname: crc
+    path: /swagger-ui
+    port: 8080
   - title: Visual Editor
     type: code
     hostname: crc
@@ -750,13 +759,38 @@ challenges:
   assignment: |
     In the previous step we've implemented the RESTful resource of our OptaPlanner Quarkus application and solved a knapsack problem. In this step of the scenario, we will deploy our service to OpenShift and scale it up to be able to handle production load.
 
-    Before getting started with this step, stop the running application in terminal 1 using `CTRL-C`.
-
     ## Login to OpenShift
 
-    Click the following command.
+    The first thing we will do, is log in our OpenShift environment using the CLI. Using `terminal 1`, log in:
 
-    `oc login --server=https://[[HOST_SUBDOMAIN]]-6443-[[KATACODA_HOST]].environments.katacoda.com --insecure-skip-tls-verify=true`
+    ```
+    oc login -u developer -p developer
+    ```
+
+    You should see
+
+    ```bash
+    Login successful.
+    You don't have any projects. You can try to create a new project, by running `oc new-project <projectname>`
+    ```
+    ## Create project
+
+    Now, let's create an OpenShift project to deploy our service. In `Terminal 1` run the following command:
+    ```
+    oc new-project quarkus --display-name="Sample Quarkus App"
+    ```
+    
+    ## Deploy application to OpenShift
+    Now let's deploy the application itself. Run the following command which will build and deploy a Quarkus native application using the OpenShift extension (this will take a few minutes to complete as it rebuilds the native executable, generates a container image and pushes it into OpenShift):
+    ```
+    mvn clean package -Pnative -f /root/projects/quarkus/getting-started \
+    -Dquarkus.kubernetes-client.trust-certs=true \
+    -Dquarkus.container-image.build=true \
+    -Dquarkus.kubernetes.deploy=true \
+    -Dquarkus.kubernetes.deployment-target=openshift \
+    -Dquarkus.openshift.expose=true \
+    -Dquarkus.openshift.labels.app.openshift.io/runtime=quarkus
+    ```
 
     Back in the [Overview in the OpenShift Console](https://console-openshift-console-[[HOST_SUBDOMAIN]]-443-[[KATACODA_HOST]].environments.katacoda.com/k8s/ns/knapsack-optaplanner/deploymentconfigs/knapsack-optaplanner) we can see the app scaling dynamically up to 10 pods.
 
