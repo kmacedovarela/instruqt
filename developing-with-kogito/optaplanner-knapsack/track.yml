@@ -246,7 +246,7 @@ challenges:
 
     First, let's tell OptaPlanner that this Ingot class is our `PlanningEntity` class. To do this, on line 11, annotate the class by adding:
     ```
-    @PlanningEntity
+      @PlanningEntity
     ```
 
     It should look like this:
@@ -267,7 +267,7 @@ challenges:
     On line 19, annotate the `selected` attribute by adding:
 
     ```
-    @PlanningVariable(valueRangeProviderRefs = "selected")
+        @PlanningVariable(valueRangeProviderRefs = "selected")
     ```
 
     It should look like this:
@@ -800,7 +800,8 @@ challenges:
     **TIP:** The OpenShift extension is actually a wrapper extension that brings together the [kubernetes](https://quarkus.io/guides/deploying-to-kubernetes) and [container-image-s2i](https://quarkus.io/guides/container-image#s2i) extensions with defaults so that it’s easier for the user to get started with Quarkus on OpenShift.
 
     Run the following command to add it to our project in Terminal 1:
-    ```bash
+    ```
+    cd /root/projects/optaplanner/knapsack-optaplanner-quarkus/
     mvn quarkus:add-extension -Dextensions="openshift" -f /root/projects/optaplanner/knapsack-optaplanner-quarkus
     ```
 
@@ -885,7 +886,7 @@ challenges:
     Next, let's do our request. We'll send the information about the knapsack and a list of ingots. Let's use OptaPlanner to solve this for us:
 
     ```
-    curl --location --request POST '$APP_ROUTE/solve' --header 'Accept: application/json' --header 'Content-Type: application/json' --header 'Content-Type: text/plain' --header 'Cookie: JSESSIONID=0C6C24091A814A4A0431ED5E32CE6B45' --data-raw '{"knapsack": { "maxWeight": 10 }, "ingots" : [ { "weight": 4, "value": 15 }, { "weight": 4, "value": 15 }, { "weight": 3, "value": 12}, { "weight": 3, "value": 12 }, { "weight": 3, "value": 12 }, { "weight": 2, "value": 7 }, { "weight": 2, "value": 7 }, { "weight": 2, "value": 7 }, { "weight": 2, "value": 7 }, { "weight": 2, "value": 7} ]}'
+    curl --location --request POST "${APP_ROUTE}/solve" --header 'Accept: application/json' --header 'Content-Type: application/json' --header 'Content-Type: text/plain' --header 'Cookie: JSESSIONID=0C6C24091A814A4A0431ED5E32CE6B45' --data-raw '{"knapsack": { "maxWeight": 10 }, "ingots" : [ { "weight": 4, "value": 15 }, { "weight": 4, "value": 15 }, { "weight": 3, "value": 12}, { "weight": 3, "value": 12 }, { "weight": 3, "value": 12 }, { "weight": 2, "value": 7 }, { "weight": 2, "value": 7 }, { "weight": 2, "value": 7 }, { "weight": 2, "value": 7 }, { "weight": 2, "value": 7} ]}'
     ```
 
     Check the output with the ingots tagged with `"selected"=true`.
@@ -920,4 +921,4 @@ challenges:
     new_window: true
   difficulty: basic
   timelimit: 600
-checksum: "10526126021181582702"
+checksum: "2809824140481885938"
